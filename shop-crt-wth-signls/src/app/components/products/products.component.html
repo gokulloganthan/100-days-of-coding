@@ -1,0 +1,20 @@
+
+<div class="search-container">
+    <h2>Product Search</h2>
+    <input 
+    type="text" 
+    name="realTimeSearch" 
+    id="realTimeSearch"
+    [(ngModel)]="searchQuery"
+    (ngModelChange)="onSearchChange($event)"
+    placeholder="search for products..."
+    />
+</div>
+
+<div class="product-list">
+    <ul>
+        @for (product of filteredProducts(); track $index) {
+            <li>{{product.name}} - Rs.{{product.price}}</li>
+        }
+    </ul>
+</div>

@@ -1,0 +1,16 @@
+<div class="cart">
+  <h2>Cart list</h2>
+
+  @for (product of cart(); track $index) {
+  <ul>
+    <li>
+      {{ product.name }} {{ $index + 1 }} - Rs.{{ product.price }}
+      <button (click)="removeProduct(product.id)">x</button>
+    </li>
+  </ul>
+  }
+
+  <h2>Total: Rs.{{ totalPrice() }}</h2>
+
+  <button (click)="addProduct()">Add</button>
+</div>
