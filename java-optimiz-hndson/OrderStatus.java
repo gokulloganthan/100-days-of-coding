@@ -1,3 +1,4 @@
+/* we can eliminate the multiple nested if else in java application by ENUMS whereevr possible */
 public enum OrderStatus {
     NEW {
         @Override
