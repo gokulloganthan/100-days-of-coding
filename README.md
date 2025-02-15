@@ -19,3 +19,8 @@
 - **Implemented:** Lambda functions and enums in Java to eliminate if-else statements
   - [Commit 63f83d87c0d8aca33a5f39238bbde8e88ecf5578](https://github.com/gokulloganthan/100-days-of-coding/commit/63f83d87c0d8aca33a5f39238bbde8e88ecf5578)
   - [Commit 9c716401e39d59a5e222f0dcecfc7d81edb346ca](https://github.com/gokulloganthan/100-days-of-coding/commit/9c716401e39d59a5e222f0dcecfc7d81edb346ca)
+ 
+## 15-02-2025
+### Topic: Soft Skills
+#### Subtopic: Senior Software Engineer Practices
+- **Read:** [How To Update Your Status During Standup](https://medium.com/better-programming/how-to-update-your-status-during-stand-up-like-a-senior-engineer-f05f3c7f91e4)
