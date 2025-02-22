@@ -24,3 +24,8 @@
 ### Topic: Soft Skills
 #### Subtopic: Senior Software Engineer Practices
 - **Read:** [How To Update Your Status During Standup](https://medium.com/better-programming/how-to-update-your-status-during-stand-up-like-a-senior-engineer-f05f3c7f91e4)
+
+## 22-02-2025
+### Topic: Data Structures And Algorithms
+#### Subtopic: Course plan
+- **Read:** [[How I Mastered Data Structures and Algorithm](https://blog.algomaster.io/p/how-i-mastered-data-structures-and-algorithms)
