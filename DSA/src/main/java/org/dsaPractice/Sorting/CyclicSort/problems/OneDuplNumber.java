@@ -7,6 +7,7 @@ class OneDuplNumber {
     public static void main(String[] args) {
         int[] arr = new int[]{3,1,3,4,2};
 
+        System.out.println(Integer.toString(3));
         System.out.println(findDuplicate(arr));
     }
     private static int findDuplicate(int[] nums) {
