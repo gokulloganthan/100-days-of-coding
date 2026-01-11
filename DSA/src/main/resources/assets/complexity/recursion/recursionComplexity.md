@@ -58,3 +58,35 @@ While applying AK method if P is evaluated to be less than G(x) then g(x) will b
 -   f(n) = f(n-1) + f(n-2)
 -   i.e O(derived golden ratio by neglecting the less dominating terms)
 -   ![img_12.png](img_12.png)
+
+
+## Types of eqautions
+-   homogeneous
+  - linear recurrence that has forms of similar type 
+    - f(n) = f(n-1) + f(n-2)
+      - types of homogenous
+        - homegenous with distinct roots
+          - after solving getting alpha with distinct root values we are good
+        - homogenous with repeated roots
+          - after solving getting same root values then take next progression in series
+            - ![img_17.png](img_17.png)
+      - how we solve ?
+        - use characteric equations approach to find the value of alpha
+        - then substitue in the c1*(aplha)^1 + c2*(alpha)^2 (I may need corrections in this note line) 
+-   non-homogenous
+  - linear recurrences that has similar form + another function like f(x) , g(x) attached to it
+    - f(n) = f(n-1) + f(n-2) + g(n)
+      - how we solve
+        - identify value of f(n) as usual using characteric equation approach by considering g(n) to be 0 
+        - now guess the g(n) to be particular value multiplied by constant in rhs and in lhs we have f(n-1)+f(n-2)
+        - subsitute constant * particular value in f(n) & f(n-1) and find c 
+        - substitute c value in the c1 in original f(n) equation 
+      - how to guess the particular value
+        - if form has terms
+          - exponential like 2^n or 3^n then our guess need to add constant before guess eq a*2^n
+          - if polynomial like n^2-1 then  our guess need to be a*n^2 + bn + c
+          - if has both exponential & polynomial like 2^n + n then our guess need to be a*2^n + bn + c 
+          -if guess fails for exponential with a*2^n then try to increase the equation along with adjusting degree
+            - initial a - failed
+            - an + b - failed (n with degree 1)
+            - an^2 + bn + c - keep trying guessing until we get some value (n with degree 2 here)
