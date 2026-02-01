@@ -1,82 +1,109 @@
-# Interview Questions and Answers
+# Equitas — Java Full-Stack Interview (2026-01-31)
 
-## Company: taff
+- Candidate: gokulloganathn
+- Role: Java Full-Stack
+- Day: 001 (to be part of 100-days-of-coding series)
 
-### 1. What is the difference between method overloading and overriding?
+Below are the questions, concise answers, and code previews (full code files are included under day-001-equitas-2026-01-31/).
 
-- **Method Overloading:** This is when multiple methods in the same class have the same name but different parameters (different type, number, or both).
-- **Method Overriding:** This occurs when a subclass has a method with the same name, return type, and parameters as a method in its superclass. The method in the subclass provides a specific implemen[...]
+---
 
-### 2. Is Java String mutable or immutable?
+1) How do you authenticate the user in a Spring Boot API?
 
-- **Immutable:** Java Strings are immutable, meaning that once a String object is created, its value cannot be changed. Any modification to a String results in the creation of a new String object.
+Answer (short):
+- Use Spring Security to secure endpoints.
+- Typical flow: user submits credentials to an authentication endpoint → server authenticates using a UserDetailsService + PasswordEncoder → on success the server returns a JWT access token → client includes the token in the Authorization header for subsequent requests → a OncePerRequestFilter validates the token and sets the SecurityContext.
 
-### 3. Which String method do you prefer when you are working with threads?
+Code preview (JwtUtil.java):
 
-- When working with threads, it’s preferred to use `StringBuffer` or `StringBuilder`. `StringBuffer` is synchronized and thus thread-safe, whereas `StringBuilder` is not synchronized but can be used[...]
+```java
+package com.example.security;
 
-### 4. What is middleware and Node.js? How are they both interlinked?
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
 
-- **Middleware:** Middleware refers to software that acts as an intermediary, enabling communication and data management for distributed applications. It handles tasks such as authentication, logging,[...]
-- **Node.js:** Node.js is a runtime environment that allows developers to execute JavaScript code server-side. It's known for its non-blocking, event-driven architecture.
-- **Interlink:** Middleware in Node.js is often used in web frameworks like Express.js, where middleware functions can intercept requests, process them, and pass them on to the next middleware or rout[...]
+public class JwtUtil {
+    private final String secret = "replace_with_strong_secret_here_change_me_please_!";
+    private final long expirationMs = 1000L * 60 * 60; // 1 hour
 
-## Coding Questions in JavaScript
+    private Key getSigningKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes());
+    }
 
-### 1. Sort the employee name and place based on place
+    public String generateToken(String username, Map<String, Object> claims) {
+        Date now = new Date();
+        return Jwts.builder()
+                .setClaims(claims != null ? claims : new HashMap<>())
+                .setSubject(username)
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + expirationMs))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
 
-```javascript
-let employees = [
-  { name: 'John', place: 'New York' },
-  { name: 'Jane', place: 'California' },
-  { name: 'Doe', place: 'New York' },
-  { name: 'Smith', place: 'Florida' }
-];
-
-employees.sort((a, b) => a.place.localeCompare(b.place));
-
-console.log(employees);
-
+    // ... other helper methods omitted for brevity (see day-001 folder)
+}
 ```
 
-## Interview experience
+2) What are the real-time use cases and where/how do you use tokens in Spring Boot?
 
-- Platform Science — 2026-01-23
+Answer (real-world uses):
+- Stateless authentication for REST APIs and microservices
+- Mobile clients / SPAs: token-based auth decouples server-side sessions
+- Authorization via claims/roles in token
+- Microservice-to-microservice auth and signed URLs for temporary access (cloud storage)
 
-  Summary:
-  - Interviewed for a backend role. The interview covered SQL, Java/Spring concepts, authentication/authorization, OAuth2/JWT, and a live coding task using streams.
+3) What are methods in REST API?
 
-  Questions asked and my responses:
-  1. Have you used SQL?
-     - Asked about past experience using SQL and relational databases.
-     - My response: Yes — described projects where I used SQL for data modeling and queries.
+Answer:
+- GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS — with semantics (safe/idempotent) and best practices.
 
-  2. What is the purpose of the flush() method?
-     - Asked about flush() (likely in the context of JPA/Hibernate or I/O streams).
-     - My response: Explained that flush() forces the persistence context to synchronize with the database (in JPA/Hibernate) and that in I/O it forces buffered data to be written out.
+4) How do you build the API into a jar file?
 
-  3. How do you authenticate and authorize a user?
-     - They asked me to explain the login process from frontend to backend.
-     - My response: I gave a high-level overview of authentication and authorization flows (login request, credential validation, session/JWT issuance, access control).
-     - Interviewer expectation: They wanted a deeper, step-by-step internal walkthrough (exact request/response payloads, token lifecycles, storage, session vs stateless tokens, refresh tokens, token revocation, and how middleware/filters enforce authorization).
+Answer:
+- With Maven: mvn clean package (spring-boot-maven-plugin produces executable jar)
+- With Gradle: ./gradlew bootJar
 
-  4. How does OAuth2 authenticate the user?
-     - I mentioned mechanisms like token issuance and JWTs.
-     - Correction/clarification: OAuth2 is an authorization framework that issues access (and optionally ID) tokens after user consent; OpenID Connect (OIDC) builds identity on top of OAuth2 and commonly uses ID tokens (often JWTs). Encryption and signing (JWS/JWE) are used to protect/verify tokens depending on configuration.
+5) What is use of GCP Cloud Storage bucket?
 
-  5. Live coding: Use streams to count the number of letters in a string
-     - Task: Implement a solution using streams (likely Java Stream API).
-     - Gap: I struggled with autocompletion and typing in the online coding environment which slowed me down while writing the solution from scratch.
+Answer:
+- Object storage for images, backups, static assets, ETL staging, signed URLs, lifecycle rules, integration with Cloud Functions, etc.
 
-  Final feedback from HR:
-  - Improve integration of SQL with Spring using Hibernate (practical experience with entity mappings, transactions, repositories).
-  - Deepen understanding of authentication internals (OAuth2/OIDC flows, JWT structure and validation, refresh token handling, secure storage and revocation strategies).
+Code preview (SignedUrlExample.java):
 
-  Takeaways / action items:
-  - Practice hands-on projects that integrate Spring Boot with a relational database using Hibernate (entities, JPQL, Criteria API, transaction management).
-  - Study authentication and authorization in depth:
-    - Understand the OAuth2 flows (authorization code, client credentials, refresh tokens).
-    - Learn OpenID Connect basics and how ID tokens differ from access tokens.
-    - Practice implementing JWT creation, signing, validation, expiry, and refresh flows.
-    - Learn best practices for token storage, revocation, and secure transmission.
-  - Do timed live-coding exercises in online editors to get comfortable with typing and autocompletion constraints.
+```java
+package com.example.gcp;
+
+import com.google.cloud.storage.*;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
+public class SignedUrlExample {
+    public URL generateV4UploadSignedUrl(String bucketName, String objectName) {
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, objectName).build();
+
+        URL signedUrl = storage.signUrl(blobInfo, 15, TimeUnit.MINUTES,
+                Storage.SignUrlOption.httpMethod(HttpMethod.PUT),
+                Storage.SignUrlOption.withV4Signature());
+        return signedUrl;
+    }
+}
+```
+
+Additional questions (not asked):
+
+Q) What is JWT token?
+
+Answer:
+- JWT (JSON Web Token) is a compact, URL-safe token with three parts (header.payload.signature). Claims include iss, sub, exp, iat, and custom claims. JWTs are useful for stateless authentication but must be validated for signature, issuer, audience, and expiry. Avoid sensitive data in payload unless encrypted.
+
+---
+
+Notes & next steps:
+- Files added under day-001-equitas-2026-01-31/ include full source files and a minimal pom.xml.
+- This day entry will be the first in your 100-days-of-coding series; future days can follow the same folder pattern.
