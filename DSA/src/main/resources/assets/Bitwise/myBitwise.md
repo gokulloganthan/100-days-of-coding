@@ -53,3 +53,46 @@ Even or Odd
   - so any number binary representation last digit is the deciding factor of an number to be odd or not
   - beacuse adding this to previous digits calculation completely changes the evenity /oddity of an no
 -   ![img_7.png](img_7.png)
+
+Negative or positive number
+-  If the first digit i.e MSB Most Significant Bit start with 1 in binary format
+  -Then the number is negative
+-  If the first digit start with 0
+  - Then the number is positive
+
+- Steps to convert no to negative
+- Using 2's complement
+- take complement of number (equivalent to 11111111 - 00001010 )
+- then add one to the number
+- We call this as 2's complement
+- Master plan behind 2's complement
+- Take power of 2 in binary that has length as such 8 bits can be accomodated and rest is ignored 
+- ![img_8.png](img_8.png)
+- ![img_9.png](img_9.png)
+
+
+Range of numbers
+-   ![img_10.png](img_10.png)
+
+total digits of number in any representation
+- ![img_13.png](img_13.png)
+- ![img_12.png](img_12.png)
+
+
+Sum 0f nth row in pascal triangle
+- ![img_15.png](img_15.png)
+- ![img_14.png](img_14.png)
+
+Find number ris power of 2 or not
+- If there is only one 1 in the entire 8 digit representation of binary vlaue
+- Eg: 2^8 100000000
+- Approach
+  - 1st app
+    - make right shift and identify last digit is 1 and keep counter to count total 1
+  - 2nd
+      - ![img_17.png](img_17.png)
+      - ![img_18.png](img_18.png)
+      - ![img_16.png](img_16.png)
+
+Find the value of a^b 
+- ![img_19.png](img_19.png)
