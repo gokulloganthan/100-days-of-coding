@@ -1,0 +1,16 @@
+Interview experience
+-  Platform Science (23-01-2026)
+  -  Have you used SQL ?
+  -  What is flush() method used for ?
+  -  How you authenticate & Autherize an user
+      -  asked me two explain the login process from frontend to backend
+      - I responsed : High level view of authentication & autherrzation
+      - thet expected : deep dive details of it ?
+  - How OAuth2 authenicates the user ?
+    - using decription mechanism
+    - using JWT token
+  - Asked me to implement streams to find the number of letters in an string
+    - gap I faced is autocompletion as they asked me to type in online compiler
+  - Final feedback from hr
+    -  Focus on integrating SQL with spring usiong hibernate
+    -  Focus on Authentication mechanism internal working 

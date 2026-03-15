@@ -1,0 +1,161 @@
+Walmart coding questions
+1.Print below
+a.items in A not in B 
+b.items in B in not in A 
+c.print difference of count of each item b/w A & B 
+import java.util.*;
+import java.util.HashMap;
+
+
+/******************************************************************************
+
+                            Online Java Compiler.
+                Code, Compile, Run and Debug java program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+// Only A and not in B
+// Only in B and not in A
+//A = ["t1","t2","t3","t2","t4"]
+//B = ["t2","t3","t2","t5"]
+//{"t1","t4"}
+//{"t5"}
+//{ "t1": (A:1,B:0), "t4": (A:1,B:0), "t5": (A:0,B:1) }
+
+
+public class Main
+{
+	public static void main(String[] args) {
+		String[] A = new String[] {"t1","t2","t3","t2","t4"};
+		String[] B = new String[] {"t2","t3","t2","t5"};
+		
+		Map<String,Integer> cntMapA = new HashMap<>(); 
+		Map<String,Integer> cntMapB = new HashMap<>(); 
+		
+		for(String a:A){
+		    if(!cntMapA.containsKey(a)){
+		        cntMapA.put(a,1);
+		    }else{
+		        var currStrCnt = cntMapA.get(a);
+		        cntMapA.put(a,currStrCnt++);
+		    }
+		}
+		
+		cntMapA.forEach((key,val) -> {
+		    System.out.println(key+":"+val);
+		});
+		
+		for(String b:B){
+		    if(!cntMapB.containsKey(b) && cntMapB.){
+		        cntMapB.put(b,1);
+		    }
+		    else{
+		        var currStrCnt = cntMapB.get(b);
+		        cntMapB.put(b,currStrCnt++);
+		    }
+		}
+		
+		cntMapB.forEach((key,val) -> {
+		    System.out.println(key+":"+val);
+		});
+	}
+	
+
+	
+}
+
+2.Print max amount I can avail within gift limit
+   //Gifft : 300
+	//Item values [120, 90, 250, 30]
+	// o/p [250+30] -> 280 
+	
+	
+public class Main
+{
+    public static int removeSmallValuedItem(int[] itemVal,int start,int end){
+        int min = itemVal[start];
+		for(int i=start+1;i<end;i++){
+		    if(min > itemVal[i]){
+		        min = itemVal[i];
+		    }
+		}
+		return min;
+    }
+	public static void main(String[] args) {
+		int maxReedmAmt = 300;
+		int[] itemVal = new int[]{120, 90, 250, 30};
+		int maxItems = 0; 
+		
+		
+		int max = itemVal[0];
+		for(int i=1;i<itemVal.length;i++){
+		    if(itemVal[i]+max > maxReedmAmt){
+		        maxItems -= removeSmallValuedItem(itemVal,0,i);
+		    }
+		    
+		    int sum = maxItems + itemVal[i];
+		       
+		    if(sum <= maxReedmAmt){
+		         maxItems = sum;
+		    }
+		}
+		
+		System.out.println(maxItems);
+	}
+}
+3.Print letters in between if balanced array
+
+import java.util.*;
+import java.util.HashSet;
+/******************************************************************************
+
+                            Online Java Compiler.
+                Code, Compile, Run and Debug java program online.
+Write your code in this editor and press "Run" button to execute it.
+
+*******************************************************************************/
+/*
+Hello {{a{{b}}c}} end
+ 
+["b", "a{{b}}c"]
+ 
+s = "Pay to {{user{{id}}}} and {{amount}}."
+ 
+["id","user{{id}}","amount"]
+ 
+*/
+
+public class Main
+{
+    public static int isBalanced(Set chSet,char ch){
+        int blnChecker = chSet.size();
+        
+        for(int i =0;i<chSet.size();i++){
+            if(ch == '}' && chSet.size() > 0){
+                blnChecker--;
+            }
+        }
+        return blnChecker;
+    }
+	public static void main(String[] args) {
+		String s = new String("{{a{{b}}c}}");
+		Set<Character> chSet = new HashSet<>(); 
+		List<Character> letterBucket = new ArrayList();
+		int bal = 0;
+		
+    	for(int i=0;i<s.length();i++){
+    	   int val = (int) s.charAt(i);
+    	   if(s.charAt(i) == '{'){
+    	        chSet.add('{');
+    	        bal++;
+    	   }else if (val >= 97 && val <= 122){
+	           System.out.println(s.charAt(i));
+    	   }else if(s.charAt(i) == '}'){
+    	       if(chSet.size() - 1 >= 0){
+    	        bal --;
+    	        chSet.remove('{');
+    	       }
+    	   }
+    	}
+	}
+}
