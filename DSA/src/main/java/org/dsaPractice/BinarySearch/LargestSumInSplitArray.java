@@ -1,7 +1,6 @@
-package org.example.BinarySearch;
+package org.dsaPractice.BinarySearch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /*

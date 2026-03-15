@@ -1,4 +1,4 @@
-package org.example.BinarySearch;
+package org.dsaPractice.BinarySearch;
 
 //FIND SMALLEST CHARACTER LARGER THAN THE TARGET
 public class CeilingLetter {

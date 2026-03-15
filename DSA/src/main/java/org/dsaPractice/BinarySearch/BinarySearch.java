@@ -1,4 +1,4 @@
-package org.example.BinarySearch;
+package org.dsaPractice.BinarySearch;
 
 public class BinarySearch {
     public static void main(String[] args) {

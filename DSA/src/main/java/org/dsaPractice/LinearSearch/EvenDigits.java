@@ -1,6 +1,4 @@
-package org.example.LinearSearch;
-
-import java.util.Scanner;
+package org.dsaPractice.LinearSearch;
 
 public class EvenDigits {
     public static void main(String[] args) {

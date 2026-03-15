@@ -1,6 +1,4 @@
-package org.example.BinarySearch;
-
-import java.util.Arrays;
+package org.dsaPractice.BinarySearch;
 
 //FLOOR  - FIND LARGEST NUMBER SMALLER THAN THE TARGET
 //CEILING - FIND SMALLEST NUMBER LARGER THAN THE TARGET

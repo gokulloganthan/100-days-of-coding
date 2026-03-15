@@ -1,4 +1,4 @@
-package org.example.BinarySearch;
+package org.dsaPractice.BinarySearch;
 
 //https://leetcode.com/problems/peak-index-in-a-mountain-array/
 /*
