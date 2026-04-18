@@ -1,38 +1,109 @@
-# Interview Questions and Answers
+# Equitas — Java Full-Stack Interview (2026-01-31)
 
-## Company: taff
+- Candidate: gokulloganathn
+- Role: Java Full-Stack
+- Day: 001 (to be part of 100-days-of-coding series)
 
-### 1. What is the difference between method overloading and overriding?
+Below are the questions, concise answers, and code previews (full code files are included under day-001-equitas-2026-01-31/).
 
-- **Method Overloading:** This is when multiple methods in the same class have the same name but different parameters (different type, number, or both).
-- **Method Overriding:** This occurs when a subclass has a method with the same name, return type, and parameters as a method in its superclass. The method in the subclass provides a specific implementation for the method in the superclass.
+---
 
-### 2. Is Java String mutable or immutable?
+1) How do you authenticate the user in a Spring Boot API?
 
-- **Immutable:** Java Strings are immutable, meaning that once a String object is created, its value cannot be changed. Any modification to a String results in the creation of a new String object.
+Answer (short):
+- Use Spring Security to secure endpoints.
+- Typical flow: user submits credentials to an authentication endpoint → server authenticates using a UserDetailsService + PasswordEncoder → on success the server returns a JWT access token → client includes the token in the Authorization header for subsequent requests → a OncePerRequestFilter validates the token and sets the SecurityContext.
 
-### 3. Which String method do you prefer when you are working with threads?
+Code preview (JwtUtil.java):
 
-- When working with threads, it’s preferred to use `StringBuffer` or `StringBuilder`. `StringBuffer` is synchronized and thus thread-safe, whereas `StringBuilder` is not synchronized but can be used in a single-threaded environment for better performance.
+```java
+package com.example.security;
 
-### 4. What is middleware and Node.js? How are they both interlinked?
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
 
-- **Middleware:** Middleware refers to software that acts as an intermediary, enabling communication and data management for distributed applications. It handles tasks such as authentication, logging, and session management.
-- **Node.js:** Node.js is a runtime environment that allows developers to execute JavaScript code server-side. It's known for its non-blocking, event-driven architecture.
-- **Interlink:** Middleware in Node.js is often used in web frameworks like Express.js, where middleware functions can intercept requests, process them, and pass them on to the next middleware or route handler.
+public class JwtUtil {
+    private final String secret = "replace_with_strong_secret_here_change_me_please_!";
+    private final long expirationMs = 1000L * 60 * 60; // 1 hour
 
-## Coding Questions in JavaScript
+    private Key getSigningKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes());
+    }
 
-### 1. Sort the employee name and place based on place
+    public String generateToken(String username, Map<String, Object> claims) {
+        Date now = new Date();
+        return Jwts.builder()
+                .setClaims(claims != null ? claims : new HashMap<>())
+                .setSubject(username)
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + expirationMs))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
 
-```javascript
-let employees = [
-  { name: 'John', place: 'New York' },
-  { name: 'Jane', place: 'California' },
-  { name: 'Doe', place: 'New York' },
-  { name: 'Smith', place: 'Florida' }
-];
+    // ... other helper methods omitted for brevity (see day-001 folder)
+}
+```
 
-employees.sort((a, b) => a.place.localeCompare(b.place));
+2) What are the real-time use cases and where/how do you use tokens in Spring Boot?
 
-console.log(employees);
+Answer (real-world uses):
+- Stateless authentication for REST APIs and microservices
+- Mobile clients / SPAs: token-based auth decouples server-side sessions
+- Authorization via claims/roles in token
+- Microservice-to-microservice auth and signed URLs for temporary access (cloud storage)
+
+3) What are methods in REST API?
+
+Answer:
+- GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS — with semantics (safe/idempotent) and best practices.
+
+4) How do you build the API into a jar file?
+
+Answer:
+- With Maven: mvn clean package (spring-boot-maven-plugin produces executable jar)
+- With Gradle: ./gradlew bootJar
+
+5) What is use of GCP Cloud Storage bucket?
+
+Answer:
+- Object storage for images, backups, static assets, ETL staging, signed URLs, lifecycle rules, integration with Cloud Functions, etc.
+
+Code preview (SignedUrlExample.java):
+
+```java
+package com.example.gcp;
+
+import com.google.cloud.storage.*;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
+public class SignedUrlExample {
+    public URL generateV4UploadSignedUrl(String bucketName, String objectName) {
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, objectName).build();
+
+        URL signedUrl = storage.signUrl(blobInfo, 15, TimeUnit.MINUTES,
+                Storage.SignUrlOption.httpMethod(HttpMethod.PUT),
+                Storage.SignUrlOption.withV4Signature());
+        return signedUrl;
+    }
+}
+```
+
+Additional questions (not asked):
+
+Q) What is JWT token?
+
+Answer:
+- JWT (JSON Web Token) is a compact, URL-safe token with three parts (header.payload.signature). Claims include iss, sub, exp, iat, and custom claims. JWTs are useful for stateless authentication but must be validated for signature, issuer, audience, and expiry. Avoid sensitive data in payload unless encrypted.
+
+---
+
+Notes & next steps:
+- Files added under day-001-equitas-2026-01-31/ include full source files and a minimal pom.xml.
+- This day entry will be the first in your 100-days-of-coding series; future days can follow the same folder pattern.
